@@ -13,16 +13,27 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, String>> handleIllegalArgumentException(
-            IllegalArgumentException exception) {
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+public ResponseEntity<Map<String, String>> handleEmailAlreadyExists(
+        EmailAlreadyExistsException exception) {
 
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(Map.of(
-                        "error", exception.getMessage()
-                ));
-    }
+    return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(Map.of(
+                    "error", exception.getMessage()
+            ));
+}
+
+@ExceptionHandler(InvalidCredentialsException.class)
+public ResponseEntity<Map<String, String>> handleInvalidCredentials(
+        InvalidCredentialsException exception) {
+
+    return ResponseEntity
+            .status(HttpStatus.UNAUTHORIZED)
+            .body(Map.of(
+                    "error", exception.getMessage()
+            ));
+}
     @ExceptionHandler(MethodArgumentNotValidException.class)
 public ResponseEntity<Map<String, String>> handleValidationException(
         MethodArgumentNotValidException exception) {
