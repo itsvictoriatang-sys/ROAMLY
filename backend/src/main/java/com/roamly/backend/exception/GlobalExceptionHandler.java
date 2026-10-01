@@ -34,6 +34,16 @@ public ResponseEntity<Map<String, String>> handleInvalidCredentials(
                     "error", exception.getMessage()
             ));
 }
+@ExceptionHandler(InvalidTripDateException.class)
+public ResponseEntity<Map<String, String>> handleInvalidTripDate(
+        InvalidTripDateException exception) {
+
+    return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(Map.of(
+                    "error", exception.getMessage()
+            ));
+}
     @ExceptionHandler(MethodArgumentNotValidException.class)
 public ResponseEntity<Map<String, String>> handleValidationException(
         MethodArgumentNotValidException exception) {
