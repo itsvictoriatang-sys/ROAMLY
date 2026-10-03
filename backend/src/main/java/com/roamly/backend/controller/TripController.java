@@ -10,6 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import com.roamly.backend.dto.AddTripMemberRequest;
+import com.roamly.backend.dto.TripMemberResponse;
+import com.roamly.backend.entity.TripMember;
+
 
 @RestController
 @RequestMapping("/api/trips")
@@ -52,5 +56,42 @@ public ResponseEntity<List<TripResponse>> getMyTrips(
             .toList();
 
     return ResponseEntity.ok(trips);
+}
+@PostMapping("/{tripId}/members")
+public ResponseEntity<TripMemberResponse> addMember(
+        @PathVariable Long tripId,
+        @Valid @RequestBody AddTripMemberRequest request,
+        Authentication authentication) {
+
+    String requesterEmail = authentication.getName();
+
+    TripMember tripMember = tripService.addMember(
+            tripId,
+            request.getEmail(),
+            request.getRole(),
+            requesterEmail
+    );
+
+    return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(TripMemberResponse.from(tripMember));
+}
+@GetMapping("/{tripId}/members")
+public ResponseEntity<List<TripMemberResponse>> getTripMembers(
+        @PathVariable Long tripId,
+        Authentication authentication) {
+
+    String requesterEmail = authentication.getName();
+
+    List<TripMemberResponse> members =
+            tripService.getTripMembers(
+                    tripId,
+                    requesterEmail
+            )
+            .stream()
+            .map(TripMemberResponse::from)
+            .toList();
+
+    return ResponseEntity.ok(members);
 }
 }

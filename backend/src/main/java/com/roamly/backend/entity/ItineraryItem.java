@@ -25,11 +25,12 @@ public class ItineraryItem {
     @Column(nullable = false, length = 150)
     private String title;
 
-    @Column(length = 1000)
-    private String description;
+    @Column(length = 255)
+    private String location;
 
-    @Column(name = "location_name", length = 255)
-    private String locationName;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 30)
+    private ItineraryItemType type;
 
     @Column(name = "start_time", nullable = false)
     private LocalDateTime startTime;
@@ -37,8 +38,8 @@ public class ItineraryItem {
     @Column(name = "end_time", nullable = false)
     private LocalDateTime endTime;
 
-    @Version
-    private Long version;
+    @Column(length = 1000)
+    private String notes;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

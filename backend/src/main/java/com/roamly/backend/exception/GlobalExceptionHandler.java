@@ -60,4 +60,55 @@ public ResponseEntity<Map<String, String>> handleValidationException(
             .status(HttpStatus.BAD_REQUEST)
             .body(errors);
 }
+@ExceptionHandler(TripNotFoundException.class)
+public ResponseEntity<Map<String, String>> handleTripNotFound(
+        TripNotFoundException ex) {
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(Map.of("error", ex.getMessage()));
+}
+
+@ExceptionHandler(UserNotFoundException.class)
+public ResponseEntity<Map<String, String>> handleUserNotFound(
+        UserNotFoundException ex) {
+
+    return ResponseEntity
+            .status(HttpStatus.NOT_FOUND)
+            .body(Map.of("error", ex.getMessage()));
+}
+
+@ExceptionHandler(ForbiddenTripActionException.class)
+public ResponseEntity<Map<String, String>> handleForbiddenTripAction(
+        ForbiddenTripActionException ex) {
+
+    return ResponseEntity
+            .status(HttpStatus.FORBIDDEN)
+            .body(Map.of("error", ex.getMessage()));
+}
+
+@ExceptionHandler(TripMemberAlreadyExistsException.class)
+public ResponseEntity<Map<String, String>> handleTripMemberAlreadyExists(
+        TripMemberAlreadyExistsException ex) {
+
+    return ResponseEntity
+            .status(HttpStatus.CONFLICT)
+            .body(Map.of("error", ex.getMessage()));
+}
+@ExceptionHandler(InvalidTripRoleException.class)
+public ResponseEntity<Map<String, String>> handleInvalidTripRole(
+        InvalidTripRoleException ex) {
+
+    return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(Map.of("error", ex.getMessage()));
+}
+@ExceptionHandler(InvalidItineraryTimeException.class)
+public ResponseEntity<Map<String, String>> handleInvalidItineraryTime(
+        InvalidItineraryTimeException ex) {
+
+    return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(Map.of("error", ex.getMessage()));
+}
 }

@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface TripMemberRepository extends JpaRepository<TripMember, Long> {
+public interface TripMemberRepository
+        extends JpaRepository<TripMember, Long> {
 
     List<TripMember> findByUserEmail(String email);
 
@@ -19,4 +20,6 @@ public interface TripMemberRepository extends JpaRepository<TripMember, Long> {
             Long tripId,
             String email
     );
+
+    List<TripMember> findByTripId(Long tripId);
 }
